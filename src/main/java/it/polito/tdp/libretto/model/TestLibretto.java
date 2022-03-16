@@ -7,6 +7,8 @@ public class TestLibretto {
 		
 		Libretto lib = new Libretto();
 		lib.addVoto(new Voto("Analisi 1", 30));
+		lib.addVoto(new Voto("Analisi 1", 30));	//DUPLICATO
+		lib.addVoto(new Voto("Analisi 1", 29)); //CONFLITTO
 		lib.addVoto(new Voto("Fisica 1", 27));
 		lib.addVoto(new Voto("Informatica", 25));
 		lib.addVoto(new Voto("Algebra lineare", 25));

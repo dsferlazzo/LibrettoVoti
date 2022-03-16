@@ -3,6 +3,7 @@ package it.polito.tdp.libretto.model;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Libretto {
 	
 	List<Voto> listaVoti;
@@ -17,9 +18,16 @@ public class Libretto {
 		return listaVoti;
 	}
 	
-	public void addVoto(Voto v ) {
+	public boolean addVoto(Voto v ) {
 		//lavoro con oggetto voto per non modificare campi in caso di modifica classe voto
+		if(this.isConflitto(v))
+			return false;
+		if(this.isDuplicato(v))
+			return false;
 		listaVoti.add(v);
+		//if(!isDuplicato(v) && !isConflitto(v))
+		return true;
+		
 	}
 	
 	@Override
@@ -65,11 +73,49 @@ public class Libretto {
 	}
 	
 	public boolean isConflitto(Voto v) {
+		if(this.cercaVoto(v.getMateria())==null)
+			return false;
+
+		
 		Integer punti = this.cercaVoto(v.getMateria()).getPunteggio();
-		if(punti !=null && punti != v.getPunteggio())
+		if(punti != v.getPunteggio())
 			return true;
 		else
 			return false;
+		
+	}
+	
+	public List<Voto> getVoti(){
+		return this.listaVoti;
+	}
+	
+	public Libretto votiMigliorati() {
+		
+		Libretto nuovo = new Libretto();
+		for(Voto v:listaVoti)
+		{
+			int punti = v.getPunteggio();
+			if(punti>=24)
+				punti+=2;
+			else punti++;
+			if(punti>30)		//CONTROLLO DI NON AVER SUPERATO 30
+				punti=30;
+			nuovo.addVoto(new Voto(v.getMateria(), punti));		//PER NON CAMBIARE L'ALTRO LIBRETTO
+			//DEVO MANTENERE ENTRAMBI I LIBRETTI CONTEMPORANEAMENTE
+		}		//IMPACCHETTO I NUOVI VOTI MIGLIORATI IN UN NUOVO LIBRETTO
+		
+		return nuovo;
+		
+	}
+	
+	public void cancellaVoti(int punti) {		//GNERALIZZO IL METODO
+		
+		for(Voto v: this.listaVoti) {
+			if(v.getPunteggio()<punti)
+				this.listaVoti.remove(v);
+		}
+		
+	
 		
 	}
 
