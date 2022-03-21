@@ -15,8 +15,8 @@ public class TestLibretto {
 		System.out.println(lib);
 		
 		System.out.println("\nVoti uguali a 25");
-		Libretto lib25= lib.cercaEsame(25);
-		System.out.println(lib25);
+		//Libretto lib25= lib.cercaEsame(25);
+		//System.out.println(lib25);
 		
 		System.out.println("\nVoto dell'esame: Fisica 1");
 		System.out.println(lib.cercaVoto("Fisica 1").getPunteggio());

@@ -3,6 +3,8 @@ package it.polito.tdp.libretto.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polito.tdp.librettovoti.db.LibrettoDAO;
+
 
 public class Libretto {
 	
@@ -18,7 +20,7 @@ public class Libretto {
 		return listaVoti;
 	}
 	
-	public boolean addVoto(Voto v ) {
+	/*public boolean addVoto(Voto v ) {
 		//lavoro con oggetto voto per non modificare campi in caso di modifica classe voto
 		if(this.isConflitto(v))
 			return false;
@@ -28,6 +30,12 @@ public class Libretto {
 		//if(!isDuplicato(v) && !isConflitto(v))
 		return true;
 		
+	}*/
+	
+	public boolean addVoto(Voto v) {
+		LibrettoDAO dao = new LibrettoDAO();
+		boolean result = dao.creaVoto(v);
+		return result;
 	}
 	
 	@Override
@@ -52,7 +60,7 @@ public class Libretto {
 		return null;
 	}
 	
-	public Libretto cercaEsame(int pt){
+	/*public Libretto cercaEsame(int pt){
 		Libretto output = new Libretto();
 		for(int i = 0;i<listaVoti.size();i++)
 		{
@@ -61,7 +69,7 @@ public class Libretto {
 		}
 		
 		return output;
-	}
+	}*/
 	
 	public boolean isDuplicato(Voto v) {
 		for(Voto v1:listaVoti)
@@ -85,11 +93,16 @@ public class Libretto {
 		
 	}
 	
-	public List<Voto> getVoti(){
+	/*public List<Voto> getVoti(){
 		return this.listaVoti;
+	}*/
+	
+	public List<Voto> getVoti(){
+		LibrettoDAO dao = new LibrettoDAO();
+		return dao.readAllVoto();
 	}
 	
-	public Libretto votiMigliorati() {
+	/*public Libretto votiMigliorati() {
 		
 		Libretto nuovo = new Libretto();
 		for(Voto v:listaVoti)
@@ -106,7 +119,7 @@ public class Libretto {
 		
 		return nuovo;
 		
-	}
+	}*/
 	
 	public void cancellaVoti(int punti) {		//GNERALIZZO IL METODO
 		
